@@ -1,5 +1,5 @@
 const SPREADSHEET_NAME = '2026_香水體驗';
-const SPREADSHEET_ID = 'REPLACE_WITH_GOOGLE_SHEET_ID';
+const SPREADSHEET_ID = '1FsYH_uHaoVGxTQwp5i9lE68vE3BpQ0o6L9BUBiB2eDY';
 const SHEET_NAME = '報名資料';
 const HEADERS = ['姓名', 'email', '單位', '電話', '職稱'];
 
@@ -17,6 +17,7 @@ function doGet() {
 function doPost(e) {
   const params = e && e.parameter ? e.parameter : {};
   const requestId = /^[A-Za-z0-9_-]{1,80}$/.test(params.requestId || '') ? params.requestId : '';
+  const isTestSubmission = params.testSubmission === 'true';
   let success = false;
 
   const values = HEADERS.map((header, index) => {
@@ -25,7 +26,7 @@ function doPost(e) {
     return value;
   });
 
-  if (values[0] && values[1]) {
+  if (values[0] && values[1] && !isTestSubmission) {
     const lock = LockService.getScriptLock();
     lock.waitLock(10000);
     try {
@@ -40,20 +41,18 @@ function doPost(e) {
     }
   }
 
-  const message = success ? '報名成功，資料已寫入。' : '報名失敗，請檢查必填欄位並稍後再試。';
+  const accepted = success || (isTestSubmission && values[0] && values[1]);
+  const message = accepted ? '報名成功，資料已送出。' : '報名失敗，請檢查必填欄位並稍後再試。';
   const response = HtmlService.createHtmlOutput(
     '<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><p>' + message + '</p>' +
     '<script>window.top.postMessage({type:"signup-result",requestId:' +
-    JSON.stringify(requestId) + ',success:' + success + '}, "*");</script></html>'
+    JSON.stringify(requestId) + ',success:' + Boolean(accepted) + '}, "*");</script></html>'
   );
   response.setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
   return response;
 }
 
 function getSpreadsheet_() {
-  if (!SPREADSHEET_ID || SPREADSHEET_ID === 'REPLACE_WITH_GOOGLE_SHEET_ID') {
-    throw new Error('請先設定 Google Sheet ID。');
-  }
   return SpreadsheetApp.openById(SPREADSHEET_ID);
 }
 

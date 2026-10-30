@@ -49,6 +49,10 @@ form.addEventListener('submit', (event) => {
   requestForm.target = frame.name;
   requestForm.hidden = true;
   payload.requestId = requestId;
+  const isTestSubmission = new URLSearchParams(window.location.search).get('test') === '1';
+  if (isTestSubmission) {
+    payload.testSubmission = 'true';
+  }
 
   Object.entries(payload).forEach(([name, value]) => {
     const input = document.createElement('input');
@@ -72,7 +76,9 @@ form.addEventListener('submit', (event) => {
     window.clearTimeout(timeoutId);
     if (messageEvent.data.success) {
       setStatus('報名成功！資料已送出，感謝您的參與。', 'success');
-      form.reset();
+      if (!isTestSubmission) {
+        form.reset();
+      }
     } else {
       setStatus('報名失敗，請檢查必填欄位並稍後再試。', 'error');
     }

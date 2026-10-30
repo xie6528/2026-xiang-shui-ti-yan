@@ -1,9 +1,10 @@
 const SPREADSHEET_NAME = '2026_香水體驗';
+const SPREADSHEET_ID = 'REPLACE_WITH_GOOGLE_SHEET_ID';
 const SHEET_NAME = '報名資料';
 const HEADERS = ['姓名', 'email', '單位', '電話', '職稱'];
 
 function setupSheet() {
-  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  const spreadsheet = getSpreadsheet_();
   spreadsheet.rename(SPREADSHEET_NAME);
   const sheet = getRegistrationSheet_(spreadsheet);
   sheet.getRange(1, HEADERS.indexOf('電話') + 1, sheet.getMaxRows(), 1).setNumberFormat('@');
@@ -28,7 +29,7 @@ function doPost(e) {
     const lock = LockService.getScriptLock();
     lock.waitLock(10000);
     try {
-      const sheet = getRegistrationSheet_(SpreadsheetApp.getActiveSpreadsheet());
+      const sheet = getRegistrationSheet_(getSpreadsheet_());
       const nextRow = sheet.getLastRow() + 1;
       const phoneColumn = HEADERS.indexOf('電話') + 1;
       sheet.getRange(1, phoneColumn, sheet.getMaxRows(), 1).setNumberFormat('@');
@@ -47,6 +48,13 @@ function doPost(e) {
   );
   response.setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
   return response;
+}
+
+function getSpreadsheet_() {
+  if (!SPREADSHEET_ID || SPREADSHEET_ID === 'REPLACE_WITH_GOOGLE_SHEET_ID') {
+    throw new Error('請先設定 Google Sheet ID。');
+  }
+  return SpreadsheetApp.openById(SPREADSHEET_ID);
 }
 
 function getRegistrationSheet_(spreadsheet) {

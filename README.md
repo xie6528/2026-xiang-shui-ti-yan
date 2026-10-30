@@ -4,7 +4,7 @@
 
 ## GitHub Pages 網址
 
-- https://xie6528.github.io/2026_%E9%A6%99%E6%B0%B4%E9%AB%94%E9%A9%97/
+- https://xie6528.github.io/2026-xiang-shui-ti-yan/
 
 ## 重點
 

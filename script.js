@@ -1,6 +1,6 @@
 const form = document.getElementById('signup-form');
 const statusBox = document.getElementById('form-status');
-const appScriptUrl = window.APP_SCRIPT_URL || 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec';
+const appScriptUrl = window.APP_SCRIPT_URL || 'https://script.google.com/macros/s/AKfycbwXa0wMf2lPEoHcdKoiDc43PSSNIii0aPPOeoaXo6tV_UhLbQE98fE1HWC3kBy5j37y/exec';
 let responseFrame;
 
 function setStatus(message, type = 'info') {
@@ -19,7 +19,7 @@ function getResponseFrame() {
   return responseFrame;
 }
 
-form.addEventListener('submit', async (event) => {
+form.addEventListener('submit', (event) => {
   event.preventDefault();
 
   const formData = new FormData(form);
@@ -68,8 +68,6 @@ form.addEventListener('submit', async (event) => {
 
     window.removeEventListener('message', handleResponse);
     window.clearTimeout(timeoutId);
-    requestForm.remove();
-
     if (messageEvent.data.success) {
       setStatus('報名成功！資料已送出，感謝您的參與。', 'success');
       form.reset();

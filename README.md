@@ -28,6 +28,6 @@ python -m http.server 8000
 ## Google Apps Script
 
 Google Sheet 檔名為 `2026_香水體驗`，資料工作表名稱為 `報名資料`，第一列為欄位標題。
-請將 `appscript/Code.gs` 的內容貼入該試算表綁定的 Apps Script 專案，並先執行 `setupSheet()`。
+`appscript/Code.gs` 是範本；若自行建立 Apps Script 專案，請先將 `SPREADSHEET_ID` 設為試算表 ID，再執行 `setupSheet()`。
 
-部署為 Web App 後，將部署 URL 更新到 `script.js` 中的 `APP_SCRIPT_URL`。
+目前 Web App 部署網址已設於 `script.js`。

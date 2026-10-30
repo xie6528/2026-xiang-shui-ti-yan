@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2026 SCENT OF SUCCESS｜職場品味・香氛體驗之夜</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="page-shell">
+      <section class="row title-row">
+        <p class="eyebrow">2026 SCENT OF SUCCESS</p>
+        <h1>職場品味・香氛體驗之夜</h1>
+      </section>
+
+      <section class="row image-row">
+        <img src="./香氛品味之夜.png" alt="2026 SCENT OF SUCCESS｜職場品味・香氛體驗之夜" />
+      </section>
+
+      <section class="row content-row">
+        <div class="schedule-block">
+          <h2>活動內容</h2>
+          <ul class="schedule-list">
+            <li><span>18:00</span><b>報到</b></li>
+            <li><span>19:00</span><b>場次一</b></li>
+            <li><span>20:00</span><b>場次二</b></li>
+            <li><span>21:00</span><b>現場交流</b></li>
+            <li><span>22:00</span><b>活動結束</b></li>
+          </ul>
+        </div>
+
+        <div class="form-panel">
+          <h2>立即報名</h2>
+          <form id="signup-form" method="POST" novalidate>
+            <div class="field-group">
+              <label for="name">姓名</label>
+              <input id="name" name="name" type="text" required />
+            </div>
+
+            <div class="field-group">
+              <label for="email">email</label>
+              <input id="email" name="email" type="email" required />
+            </div>
+
+            <div class="field-group">
+              <label for="unit">單位</label>
+              <input id="unit" name="unit" type="text" />
+            </div>
+
+            <div class="field-group">
+              <label for="phone">電話</label>
+              <input id="phone" name="phone" type="tel" />
+            </div>
+
+            <div class="field-group">
+              <label for="position">職稱</label>
+              <input id="position" name="position" type="text" />
+            </div>
+
+            <button type="submit">送出報名</button>
+          </form>
+          <p id="form-status" class="form-status" aria-live="polite"></p>
+        </div>
+      </section>
+    </main>
+
+    <script src="./script.js"></script>
+  </body>
+</html>

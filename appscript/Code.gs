@@ -43,7 +43,7 @@ function doPost(e) {
   const message = success ? '報名成功，資料已寫入。' : '報名失敗，請檢查必填欄位並稍後再試。';
   const response = HtmlService.createHtmlOutput(
     '<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><p>' + message + '</p>' +
-    '<script>window.parent.postMessage({type:"signup-result",requestId:' +
+    '<script>window.top.postMessage({type:"signup-result",requestId:' +
     JSON.stringify(requestId) + ',success:' + success + '}, "*");</script></html>'
   );
   response.setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);

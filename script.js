@@ -41,7 +41,7 @@ form.addEventListener('submit', (event) => {
   }
 
   setStatus('資料送出中，請稍候…', 'info');
-  const requestId = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
+  const requestId = crypto.randomUUID();
   const frame = getResponseFrame();
   const requestForm = document.createElement('form');
   requestForm.method = 'POST';
@@ -61,7 +61,9 @@ form.addEventListener('submit', (event) => {
 
   let timeoutId;
   const handleResponse = (messageEvent) => {
-    if (messageEvent.source !== frame.contentWindow || !messageEvent.data ||
+    const originAllowed = messageEvent.origin === new URL(appScriptUrl).origin ||
+      messageEvent.origin.endsWith('.googleusercontent.com');
+    if (!originAllowed || !messageEvent.data ||
         messageEvent.data.type !== 'signup-result' || messageEvent.data.requestId !== requestId) {
       return;
     }
